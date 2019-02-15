@@ -1,8 +1,17 @@
 import React from 'react'
 
-const NodeRoot = () => {
+const NodeRoot = (props) => {
+  const {
+    handleViewModal
+  } = props
+
+  const handleClick = () => handleViewModal(true)
+
   return (
-    <div className='node node-root'>
+    <div
+      className='node node-root'
+      onClick={handleClick}
+    >
       Node Root
     </div>
   )
