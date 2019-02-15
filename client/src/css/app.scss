@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
+@import './userBar.scss';
+@import './nodeRoot.scss';
+@import './tree.scss';
+
+html, body {
+  height: 100%;
+  background-color: #F3F7FB;
+  font-family: 'Roboto Mono', monospace;
+
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100%;
+}
+
+.main {
+  margin-top: 60px;
+  margin-right: 60px;
+  margin-bottom: 100px;
+  margin-left: 60px;
+}

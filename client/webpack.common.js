@@ -46,8 +46,9 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
+    extensions: ['*', '.js', '.jsx'],
     alias: {
-      Components: path.resolve(__dirname, 'src/js/components')
+      Components: path.resolve(__dirname, 'src/js/components/')
     }
   }
 }
