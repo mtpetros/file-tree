@@ -1,7 +1,87 @@
 .tree {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  flex-direction: column;
 }
 
+.node {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #CFE1EF;
+  border: 1px solid #000;
+  border-radius: 3px;
+  padding: 2.5px 5px;
+}
 
+.node-root {
+  width: 200px;
+  height: 150px;
+  border-radius: 0px;
+}
+
+.branches {
+  position: relative;
+
+  .list {
+    padding-left: 32px;
+    position: relative;
+    
+    .item {
+      padding-top: 12px;
+      position: relative;
+
+      > .item {
+        padding-top: 6px;
+        padding-bottom: 15px;
+        padding-left: 36px;
+        width: 50%;
+
+        &:before, &:after {
+          left: 18px;
+        }
+        &:before {
+          top: 15px;
+          width: 15px;
+        }
+        &:after {
+          top: 7px;
+        }
+      }
+
+      &:before, &:after {
+        content: "";
+        position: absolute;
+        left: -12px;
+      }
+      &:before {
+        border-top: 1px solid #000;
+        top: 12px;
+        width: 8px;
+        height: 0;
+      }
+      &:after {
+        border-left: 1px solid #000;
+        height: 100%;
+        width: 0;
+        top: 8px;
+      }
+    }
+    .item:last-child {
+      &:after {
+        height: 8px;
+      }
+    } 
+  }
+
+  .factory {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .range {
+    margin-left: 15px;
+  }
+}

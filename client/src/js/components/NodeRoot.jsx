@@ -2,7 +2,7 @@ import React from 'react'
 
 const NodeRoot = () => {
   return (
-    <div className='node-root'>
+    <div className='node node-root'>
       Node Root
     </div>
   )
