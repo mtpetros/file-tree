@@ -56,7 +56,7 @@ const renderFactories = (factory) => {
   )
 }
 
-const Branches = (props) => {
+const Factories = (props) => {
   // const {
   //   factories
   // } = props
@@ -70,4 +70,4 @@ const Branches = (props) => {
   )
 }
 
-export default Branches
+export default Factories

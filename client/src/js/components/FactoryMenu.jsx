@@ -12,7 +12,8 @@ const handleOnConfirm = () => null
 const FactoryMenu = (props) => {
   const {
     factory = {},
-    setIsVisible
+    setIsVisible,
+    createFactory
   } = props
 
   const {

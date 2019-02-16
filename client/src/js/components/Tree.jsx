@@ -1,31 +1,42 @@
 import React, { useState } from 'react'
 
+import factoriesContainer from 'Containers/factories'
+
 import NodeRoot from 'Components/NodeRoot'
-import Branches from 'Components/Branches'
+import Factories from 'Components/Factories'
 import ModalWrapper from 'Components/common/ModalWrapper'
 import FactoryMenu from 'Components/FactoryMenu'
 
-const Tree = () => {
+const Tree = (props) => {
   const [
     isVisible,
     setIsVisible
   ] = useState(false)
+
+  const {
+    factories,
+    createFactory
+  } = props
 
   return (
     <div className='tree'>
       <NodeRoot
         handleViewModal={setIsVisible}
       />
-      <Branches />
+      <Factories
+        factories={factories}
+      />
       <ModalWrapper
         isVisible={isVisible}
       >
         <FactoryMenu
           setIsVisible={setIsVisible}
+          createFactory={createFactory}
         />
       </ModalWrapper>
     </div>
   )
 }
 
-export default Tree
+const withFactories = factoriesContainer(Tree)
+export default withFactories
