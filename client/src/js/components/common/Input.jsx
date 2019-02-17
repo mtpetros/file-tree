@@ -6,10 +6,18 @@ const Input = (props) => {
     type,
     name,
     value,
-    min,
-    max,
-    handleChange
+    setKey
   } = props
+
+  const handleChange = (e) => {
+    const {
+      name,
+      value
+    } = e.target
+
+    setKey(name, value)
+    e.preventDefault()
+  }
 
   return (
     <div className='input'>
@@ -18,8 +26,6 @@ const Input = (props) => {
         type={type}
         name={name}
         value={value}
-        min={min}
-        max={max}
         onChange={handleChange}
         required
       />

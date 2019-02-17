@@ -2,6 +2,7 @@ const path = require('path')
 
 module.exports = {
   entry: [
+    '@babel/polyfill',
     path.resolve(__dirname, 'src/js/app.jsx'),
     path.resolve(__dirname, 'src/css/app.scss')
   ],

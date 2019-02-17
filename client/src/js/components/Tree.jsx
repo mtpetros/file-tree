@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 
-import factoriesContainer from 'Containers/factories'
-
 import NodeRoot from 'Components/NodeRoot'
 import Factories from 'Components/Factories'
 import ModalWrapper from 'Components/common/ModalWrapper'
@@ -14,8 +12,7 @@ const Tree = (props) => {
   ] = useState(false)
 
   const {
-    factories,
-    createFactory
+    factories
   } = props
 
   return (
@@ -31,12 +28,10 @@ const Tree = (props) => {
       >
         <FactoryMenu
           setIsVisible={setIsVisible}
-          createFactory={createFactory}
         />
       </ModalWrapper>
     </div>
   )
 }
 
-const withFactories = factoriesContainer(Tree)
-export default withFactories
+export default Tree

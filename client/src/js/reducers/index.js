@@ -1,5 +1,5 @@
-import factoriesReducer from './factories'
+import factory from './factory'
 
 export default {
-  factoriesReducer
+  factory
 }

@@ -41,6 +41,7 @@ async function request (method, url, body = {}) {
 
 const reduceMethods = (acc, method) => {
   return {
+    ...acc,
     [method]: (...args) => {
       return request(method.toUpperCase(), ...args)
         .catch(console.error)

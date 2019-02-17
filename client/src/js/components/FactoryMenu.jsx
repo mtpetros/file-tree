@@ -1,5 +1,7 @@
 import React from 'react'
 
+import factoryContainer from 'Containers/factory'
+
 import Input from 'Components/common/Input'
 import Button from 'Components/common/Button'
 
@@ -7,13 +9,19 @@ const handleOnCancel = (setIsVisible) => {
   return () => setIsVisible(false)
 }
 
-const handleOnConfirm = () => null
+const handleOnConfirm = (factory, createFactory) => {
+  return (e) => {
+    createFactory(factory)
+    e.preventDefault()
+  }
+}
 
 const FactoryMenu = (props) => {
   const {
     factory = {},
     setIsVisible,
-    createFactory
+    createFactory,
+    setKey
   } = props
 
   const {
@@ -23,6 +31,8 @@ const FactoryMenu = (props) => {
     amount
   } = factory
 
+  console.log(props)
+
   return (
     <div className='factory-menu'>
       <Input
@@ -30,31 +40,33 @@ const FactoryMenu = (props) => {
         type='text'
         name='name'
         value={name}
+        setKey={setKey}
       />
       <Input
         label='range bottom'
-        type='number'
+        type='text'
         name='bottom'
         value={bottom}
+        setKey={setKey}
       />
       <Input
         label='range top'
-        type='number'
+        type='text'
         name='top'
         value={top}
+        setKey={setKey}
       />
       <Input
         label='number of children'
-        type='number'
+        type='text'
         name='amount'
         value={amount}
-        min='0'
-        max='15'
+        setKey={setKey}
       />
       <div className='button-group'>
         <Button
           label='confirm'
-          onClick={handleOnConfirm}
+          onClick={handleOnConfirm(factory, createFactory)}
         />
         <Button
           label='cancel'
@@ -65,4 +77,5 @@ const FactoryMenu = (props) => {
   )
 }
 
-export default FactoryMenu
+const withFactory = factoryContainer(FactoryMenu)
+export default withFactory

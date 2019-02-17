@@ -1,15 +1,18 @@
 import host from 'Src/config/hosts'
 
-import {
+import methods from './methods'
+
+const {
   get,
   patch,
   post
-} from './methods'
+} = methods
 
 const urlBase = `${host.server}/api`
 
 export const factories = {
   create: (data) => {
+    console.log('data', data)
     return post(`${urlBase}/factories`, data)
   }
 }
