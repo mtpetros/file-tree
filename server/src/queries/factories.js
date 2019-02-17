@@ -16,7 +16,7 @@ const save = (data) => {
       amount
     )
 
-    VALUES ($1, $2, $3, $4, NOW(), NOW())
+    VALUES ($1, $2, $3, $4)
 
     RETURNING *;`
 
