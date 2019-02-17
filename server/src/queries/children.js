@@ -2,7 +2,7 @@ const { pool } = require('./connection')
 const { camelize } = require('./helpers')
 
 const reduceChildren = (acc, child, i) => {
-  const insert = `${acc.insert}($${i + 1}, ${i + 2})\n`
+  const insert = `${acc.insert}($${i + 1}, $${i + 2})\n`
 
   const values = [
     ...acc.values,
@@ -38,6 +38,7 @@ const save = (factoryId, children) => {
     RETURNING *;`
   
   console.log(text)
+  console.log(values)
   return pool.query({ text, values })
     .then(camelize)
 }

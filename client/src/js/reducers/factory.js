@@ -15,7 +15,7 @@ const SET_KEY = 'factory/SET_KEY'
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_FACTORY:
-      return { ...state, factory: payload }
+      return { ...state, ...payload }
     case SET_KEY:
       return {
         ...state,

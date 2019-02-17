@@ -1,19 +1,13 @@
 import React from 'react'
 
 import factoryContainer from 'Containers/factory'
+import generateChildren from 'Lib/generateChildren'
 
 import Input from 'Components/common/Input'
 import Button from 'Components/common/Button'
 
 const handleOnCancel = (setIsVisible) => {
   return () => setIsVisible(false)
-}
-
-const handleOnConfirm = (factory, createFactory) => {
-  return (e) => {
-    createFactory(factory)
-    e.preventDefault()
-  }
 }
 
 const FactoryMenu = (props) => {
@@ -31,7 +25,16 @@ const FactoryMenu = (props) => {
     amount
   } = factory
 
-  console.log(props)
+  const children = generateChildren({ top, bottom, amount })
+  const factoryWithChildren = {
+    ...factory,
+    children
+  }
+
+  const handleOnConfirm = (e) => {
+    createFactory(factoryWithChildren)
+    e.preventDefault()
+  }
 
   return (
     <div className='factory-menu'>
@@ -66,7 +69,7 @@ const FactoryMenu = (props) => {
       <div className='button-group'>
         <Button
           label='confirm'
-          onClick={handleOnConfirm(factory, createFactory)}
+          onClick={handleOnConfirm}
         />
         <Button
           label='cancel'

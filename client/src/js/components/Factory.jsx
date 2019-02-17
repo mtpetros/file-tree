@@ -17,7 +17,8 @@ const Factory = (props) => {
       name = 'factory',
       children = [],
       top = 200,
-      bottom = 5
+      bottom = 5,
+      amount
     }
   } = props
 
