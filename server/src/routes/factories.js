@@ -9,11 +9,21 @@ router.post('/', (req, res, next) => {
   const { data } = req.body
 
   factories.save(data)
-    .then(factory => {
-      const { id } = factory[0]
+    .then(factories => {
+      const factory = factories[0]
+      const { id } = factory
 
       return children.save(id, data.children)
-    }).catch(next)
+        .then(children => res.json({
+          data: {
+            factory: {
+              ...factory,
+              children
+            }
+          }
+        }))
+    })
+    .catch(next)
 })
 
 module.exports = router

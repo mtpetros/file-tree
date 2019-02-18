@@ -2,10 +2,14 @@ import random from 'lodash/random'
 
 const generateChildren = (opts) => {
   const {
-    top,
-    bottom,
-    amount
+    top = 0,
+    bottom = 0,
+    amount = 0
   } = opts
+
+  if (!amount) {
+    return []
+  }
 
   const safeTop = Number(top) + 1
   const safeBottom = Number(bottom) - 1

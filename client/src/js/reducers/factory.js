@@ -1,4 +1,5 @@
 import { factories } from 'Lib/api'
+import generateChildren from 'Lib/generateChildren'
 
 const initialState = {
   id: null,
@@ -37,6 +38,14 @@ export const setKey = (key, value) => {
 export const createFactory = (data) => {
   return (dispatch) => factories.create({ data })
     .then(res => dispatch(setFactory(res)))
+}
+
+export const createChildren = (opts) => {
+  return (dispatch) => {
+    const children = generateChildren(opts)
+
+    dispatch(setKey('children', children))
+  }
 }
 
 export default reducer
