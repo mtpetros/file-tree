@@ -31,6 +31,26 @@ const save = (data) => {
     .then(camelize)
 }
 
+const getAll = () => {
+  const text = `SELECT
+      f.id,
+      f.name,
+      f.bottom,
+      f.top,
+      f.amount,
+      c.children
+    FROM factories f, LATERAL (
+      SELECT ARRAY (
+        SELECT c.number
+        FROM children c
+        WHERE c.factory_id = f.id
+      ) as children
+    ) c;`
+
+  return pool.query({ text }).then(camelize)
+}
+
 module.exports = {
-  save
+  save,
+  getAll
 }

@@ -26,4 +26,10 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/', (req, res, next) => {
+  factories.getAll()
+    .then(data => res.json({ data }))
+    .catch(next)
+})
+
 module.exports = router
