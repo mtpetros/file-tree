@@ -1,27 +1,23 @@
 import { connect } from 'react-redux'
 
 import {
-  setFactory,
-  setKey,
-  createFactory,
-  createChildren
-} from 'Reducers/factory'
+  getAllFactories
+} from 'Reducers/factories'
 
 const mapStateToProps = state => {
   const {
-    factory = {}
+    factories: {
+      data = []
+    }
   } = state
 
   return {
-    factory
+    factories: data
   }
 }
 
 const mapDispatchToProps = {
-  setFactory,
-  setKey,
-  createFactory,
-  createChildren
+  getAllFactories
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

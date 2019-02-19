@@ -1,55 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import Factory from 'Components/Factory'
-
-const factories = [
-  {
-    name: 'factory 1',
-    id: 1,
-    bottom: 4,
-    top: 200,
-    amount: 3,
-    children: [
-      {
-        id: 1,
-        number: 5
-      },
-      {
-        id: 2,
-        number: 10
-      },
-      {
-        id: 3,
-        number: 30
-      }
-    ]
-  },
-  {
-    name: 'factory 2',
-    id: 2,
-    bottom: 4,
-    top: 200,
-    amount: 3,
-    children: [
-      {
-        id: 4,
-        number: 8
-      },
-      {
-        id: 5,
-        number: 12
-      },
-      {
-        id: 6,
-        number: 45
-      }
-    ]
-  }
-]
+import ActiveFactory from 'Components/ActiveFactory'
+import FactoriesContainer from 'Containers/factories'
 
 const renderFactories = (factory) => {
   return (
-    <Factory
+    <ActiveFactory
       factory={factory}
       key={factory.id}
     />
@@ -57,9 +13,18 @@ const renderFactories = (factory) => {
 }
 
 const Factories = (props) => {
-  // const {
-  //   factories
-  // } = props
+  const {
+    factories = [],
+    getAllFactories
+  } = props
+
+  console.log(props)
+
+  useEffect(() => {
+    if (!factories.length) {
+      getAllFactories()
+    }
+  })
 
   return (
     <div className='branches'>
@@ -70,4 +35,5 @@ const Factories = (props) => {
   )
 }
 
-export default Factories
+const withFactories = FactoriesContainer(Factories)
+export default withFactories

@@ -2,9 +2,7 @@ import React from 'react'
 
 const Child = (props) => {
   const {
-    child: {
-      number
-    }
+    number
   } = props
 
   return (

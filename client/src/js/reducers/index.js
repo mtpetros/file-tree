@@ -1,5 +1,7 @@
-import factory from './factory'
+import activeFactory from './activeFactory'
+import factories from './factories'
 
 export default {
-  factory
+  activeFactory,
+  factories
 }

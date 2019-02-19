@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 
-import ActiveFactoryContainer from 'Containers/activeFactory'
-
 import Input from 'Components/common/Input'
 import Button from 'Components/common/Button'
 
@@ -9,7 +7,7 @@ const handleOnCancel = (setIsVisible) => {
   return () => setIsVisible(false)
 }
 
-class FactoryMenu extends Component {
+class NodeMenu extends Component {
   componentDidUpdate (prevProps) {
     const {
       createChildren,
@@ -40,8 +38,7 @@ class FactoryMenu extends Component {
     const {
       name,
       bottom,
-      top,
-      amount
+      top
     } = factory
 
     const handleOnConfirm = (e) => {
@@ -50,7 +47,7 @@ class FactoryMenu extends Component {
     }
 
     return (
-      <div className='factory-menu'>
+      <div className='node-menu'>
         <Input
           label='factory name'
           type='text'
@@ -72,13 +69,6 @@ class FactoryMenu extends Component {
           value={top}
           setKey={setKey}
         />
-        <Input
-          label='number of children'
-          type='text'
-          name='amount'
-          value={amount}
-          setKey={setKey}
-        />
         <div className='button-group'>
           <Button
             label='confirm'
@@ -94,5 +84,4 @@ class FactoryMenu extends Component {
   }
 }
 
-const withActiveFactory = ActiveFactoryContainer(FactoryMenu)
-export default withActiveFactory
+export default NodeMenu
