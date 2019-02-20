@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 
 import ActiveFactoryContainer from 'Containers/activeFactory'
+import FactoriesContainer from 'Containers/factories'
 
 import Input from 'Components/common/Input'
 import Button from 'Components/common/Button'
+
+import io from 'socket.io-client'
+
+const socket = io()
 
 const handleOnCancel = (setIsVisible) => {
   return () => setIsVisible(false)
@@ -14,6 +19,8 @@ class FactoryMenu extends Component {
     super(props)
 
     this.renderNumberOfChildren = this.renderNumberOfChildren.bind(this)
+    this.createOrUpdateFactory = this.createOrUpdateFactory.bind(this)
+    this.handleOnConfirm = this.handleOnConfirm.bind(this)
   }
 
   componentDidMount () {
@@ -60,13 +67,38 @@ class FactoryMenu extends Component {
     return null
   }
 
+  createOrUpdateFactory () {
+    const {
+      type,
+      createFactory,
+      updateFactory,
+      activeFactory
+    } = this.props
+
+    if (type === 'factory') {
+      return createFactory(activeFactory)
+    }
+
+    return updateFactory(activeFactory.id, activeFactory)
+  }
+
+  handleOnConfirm (e) {
+    const {
+      getAllFactories,
+      setIsVisible
+    } = this.props
+
+    setIsVisible(false)
+    this.createOrUpdateFactory()
+      .then(() => socket.emit('factory updated'))
+      .then(getAllFactories)
+  }
+
   render () {
     const {
       type,
       activeFactory = {},
       setIsVisible,
-      createFactory,
-      updateFactory,
       setKey
     } = this.props
 
@@ -75,16 +107,6 @@ class FactoryMenu extends Component {
       bottom,
       top
     } = activeFactory
-
-    const handleOnConfirm = (e) => {
-      if (type === 'factory') {
-        createFactory(activeFactory)
-        e.preventDefault()
-      }
-
-      updateFactory(activeFactory.id, activeFactory)
-      e.preventDefault()
-    }
 
     const menuClass = type === 'factory' ? 'factory-menu' : 'node-menu'
 
@@ -115,7 +137,7 @@ class FactoryMenu extends Component {
         <div className='button-group'>
           <Button
             label='confirm'
-            onClick={handleOnConfirm}
+            onClick={this.handleOnConfirm}
           />
           <Button
             label='cancel'
@@ -128,4 +150,5 @@ class FactoryMenu extends Component {
 }
 
 const withActiveFactory = ActiveFactoryContainer(FactoryMenu)
-export default withActiveFactory
+const withFactories = FactoriesContainer(withActiveFactory)
+export default withFactories

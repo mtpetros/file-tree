@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { Component } from 'react'
 
 import Factory from 'Components/Factory'
+import Socket from 'Components/common/Socket'
 import FactoriesContainer from 'Containers/factories'
 
 const renderFactories = (factory) => {
@@ -12,27 +13,37 @@ const renderFactories = (factory) => {
   )
 }
 
-const Factories = (props) => {
-  const {
-    factories = [],
-    getAllFactories
-  } = props
+class Factories extends Component {
+  componentDidMount () {
+    const {
+      factories = [],
+      getAllFactories
+    } = this.props
 
-  console.log(props)
-
-  useEffect(() => {
     if (!factories.length) {
       getAllFactories()
     }
-  })
+  }
 
-  return (
-    <div className='branches'>
-      <div className='list'>
-        {factories.map(renderFactories)}
-      </div>
-    </div>
-  )
+  render () {
+    const {
+      factories = [],
+      getAllFactories
+    } = this.props
+
+    return (
+      <Socket
+        event='factory updated'
+        callback={getAllFactories}
+      >
+        <div className='branches'>
+          <div className='list'>
+            {factories.map(renderFactories)}
+          </div>
+        </div>
+      </Socket>
+    )
+  }
 }
 
 const withFactories = FactoriesContainer(Factories)
