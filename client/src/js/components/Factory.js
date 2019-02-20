@@ -4,8 +4,6 @@ import Child from 'Components/Child'
 import NodeMenu from 'Components/NodeMenu'
 import ModalWrapper from 'Components/common/ModalWrapper'
 
-import ActiveFactoryContainer from 'Containers/activeFactory'
-
 const renderChildren = (number, i) => {
   return (
     <Child
@@ -15,26 +13,21 @@ const renderChildren = (number, i) => {
   )
 }
 
-const ActiveFactory = (props) => {
+const Factory = (props) => {
   const [
     isVisible,
     setIsVisible
   ] = useState(false)
 
   const {
-    factory,
-    activeFactory,
-    setFactory
-
+    factory
   } = props
 
   const {
     name,
     children = [],
     top,
-    bottom,
-    amount,
-    id
+    bottom
   } = factory
 
   const range = `${bottom} : ${top}`
@@ -48,6 +41,7 @@ const ActiveFactory = (props) => {
       >
         <NodeMenu
           setIsVisible={setIsVisible}
+          factory={factory}
         />
       </ModalWrapper>
       <div
@@ -66,5 +60,4 @@ const ActiveFactory = (props) => {
   )
 }
 
-const withActiveFactory = ActiveFactoryContainer(ActiveFactory)
-export default withActiveFactory
+export default Factory

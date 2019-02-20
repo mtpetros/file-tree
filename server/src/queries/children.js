@@ -1,24 +1,28 @@
 const { pool } = require('./connection')
 const { camelize } = require('./helpers')
 
-let place = 0
-const reduceChildren = (factoryId, len) => (acc, child, i) => {
-  const isLast = i === len - 1
-  const finalPunc = isLast ? '' : ','
-  const insert = `${acc.insert}($${place + 1}, $${place + 2})${finalPunc}\n`
+const reduceChildren = (factoryId, len) => {
+  let place = 0
 
-  place += 2
+  return (acc, child, i) => {
+    const isLast = i === len - 1
+    const finalPunc = isLast ? '' : ','
+    const insert = `${acc.insert}
+      ($${place + 1}, $${place + 2})${finalPunc}`
 
-  const values = [
-    ...acc.values,
-    factoryId,
-    child.number
-  ]
+    place += 2
 
-  return {
-    ...acc,
-    insert,
-    values
+    const values = [
+      ...acc.values,
+      factoryId,
+      child.number
+    ]
+
+    return {
+      ...acc,
+      insert,
+      values
+    }
   }
 }
 
@@ -28,13 +32,8 @@ const initial = {
 }
 
 const save = (factoryId, children) => {
-  const {
-    insert,
-    values
-  } = children.reduce(
-    reduceChildren(factoryId, children.length),
-    initial
-  )
+  const { insert, values } = children
+    .reduce(reduceChildren(factoryId, children.length), initial)
 
   const text = `INSERT INTO children (
       factory_id,
@@ -49,6 +48,17 @@ const save = (factoryId, children) => {
     .then(camelize)
 }
 
+const remove = (factoryId) => {
+  const text = `DELETE FROM children
+    WHERE factory_id = $1;`
+
+  const values = [ factoryId ]
+
+  return pool.query({ text, values })
+    .then(camelize)
+}
+
 module.exports = {
-  save
+  save,
+  remove
 }

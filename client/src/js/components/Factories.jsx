@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 
-import ActiveFactory from 'Components/ActiveFactory'
+import Factory from 'Components/Factory'
 import FactoriesContainer from 'Containers/factories'
 
 const renderFactories = (factory) => {
   return (
-    <ActiveFactory
+    <Factory
       factory={factory}
       key={factory.id}
     />

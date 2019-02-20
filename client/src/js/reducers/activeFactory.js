@@ -10,13 +10,16 @@ const initialState = {
   children: []
 }
 
-const SET_FACTORY = 'factory/SET_FACTORY'
-const SET_KEY = 'factory/SET_KEY'
+const SET_FACTORY = 'activeFactory/SET_FACTORY'
+const RESET_FACTORY = 'activeFactory/RESET_FACTORY'
+const SET_KEY = 'activeFactory/SET_KEY'
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_FACTORY:
       return payload
+    case RESET_FACTORY:
+      return initialState
     case SET_KEY:
       return {
         ...state,
@@ -31,21 +34,28 @@ export const setFactory = (data) => {
   return { type: SET_FACTORY, payload: data }
 }
 
+export const resetFactory = () => {
+  return { type: RESET_FACTORY }
+}
+
 export const setKey = (key, value) => {
   return { type: SET_KEY, payload: { key, value } }
 }
 
 export const createFactory = (data) => {
-  return (dispatch) => factories.create({ data })
-    .then(res => dispatch(setFactory(res.json)))
+  return () => factories.create({ data })
 }
 
-export const createChildren = (opts) => {
-  return (dispatch) => {
-    const children = generateChildren(opts)
-
-    dispatch(setKey('children', children))
-  }
+export const updateFactory = (id, data) => {
+  return () => factories.update(id, { data })
 }
+
+// export const createChildren = (opts) => {
+//   return (dispatch) => {
+//     const children = generateChildren(opts)
+//
+//     dispatch(setKey('children', children))
+//   }
+// }
 
 export default reducer

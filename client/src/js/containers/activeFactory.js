@@ -2,9 +2,10 @@ import { connect } from 'react-redux'
 
 import {
   setFactory,
+  resetFactory,
   setKey,
   createFactory,
-  createChildren
+  updateFactory
 } from 'Reducers/activeFactory'
 
 const mapStateToProps = state => {
@@ -19,9 +20,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   setFactory,
+  resetFactory,
   setKey,
   createFactory,
-  createChildren
+  updateFactory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

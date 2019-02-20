@@ -31,6 +31,31 @@ const save = (data) => {
     .then(camelize)
 }
 
+const update = (id, data) => {
+  const {
+    name,
+    bottom,
+    top
+  } = data
+
+  const text = `UPDATE factories
+    SET name = $2,
+      bottom = $3,
+      top = $4
+
+    WHERE id = $1;`
+
+  const values = [
+    id,
+    name,
+    bottom,
+    top
+  ]
+
+  return pool.query({ text, values })
+    .then(camelize)
+}
+
 const getAll = () => {
   const text = `SELECT
       f.id,
@@ -45,12 +70,15 @@ const getAll = () => {
         FROM children c
         WHERE c.factory_id = f.id
       ) as children
-    ) c;`
+    ) c
+
+    ORDER BY f.id ASC;`
 
   return pool.query({ text }).then(camelize)
 }
 
 module.exports = {
   save,
+  update,
   getAll
 }
