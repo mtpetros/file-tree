@@ -1,19 +1,32 @@
 import React, { Component } from 'react'
 
 import Factory from 'Components/Factory'
-import Socket from 'Components/common/Socket'
 import FactoriesContainer from 'Containers/factories'
 
-const renderFactories = (factory) => {
-  return (
-    <Factory
-      factory={factory}
-      key={factory.id}
-    />
-  )
+const renderFactories = (socket) => {
+  return (factory) => {
+    return (
+      <Factory
+        factory={factory}
+        socket={socket}
+        key={factory.id}
+      />
+    )
+  }
 }
 
 class Factories extends Component {
+  componentWillMount () {
+    const {
+      socket,
+      getAllFactories
+    } = this.props
+
+    socket.on('factory updated', () => {
+      getAllFactories()
+    })
+  }
+
   componentDidMount () {
     const {
       factories = [],
@@ -25,23 +38,26 @@ class Factories extends Component {
     }
   }
 
+  componentWillUnmount () {
+    const {
+      socket
+    } = this.props
+
+    socket.close()
+  }
+
   render () {
     const {
       factories = [],
-      getAllFactories
+      socket
     } = this.props
 
     return (
-      <Socket
-        event='factory updated'
-        callback={getAllFactories}
-      >
-        <div className='branches'>
-          <div className='list'>
-            {factories.map(renderFactories)}
-          </div>
+      <div className='branches'>
+        <div className='list'>
+          {factories.map(renderFactories(socket))}
         </div>
-      </Socket>
+      </div>
     )
   }
 }

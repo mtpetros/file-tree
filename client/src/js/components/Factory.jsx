@@ -20,7 +20,8 @@ const Factory = (props) => {
   ] = useState(false)
 
   const {
-    factory
+    factory,
+    socket
   } = props
 
   const {
@@ -38,10 +39,12 @@ const Factory = (props) => {
     <div className='item'>
       <ModalWrapper
         isVisible={isVisible}
+        setIsVisible={setIsVisible}
       >
         <NodeMenu
           setIsVisible={setIsVisible}
           factory={factory}
+          socket={socket}
         />
       </ModalWrapper>
       <div

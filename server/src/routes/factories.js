@@ -17,7 +17,7 @@ router.post('/', (req, res, next) => {
 
       return children.save(id, newChildren)
     })
-    .then(() => res.json({}))
+    .then(() => res.status(200).send())
     .catch(next)
 })
 
@@ -29,7 +29,7 @@ router.put('/:id', (req, res, next) => {
   factories.update(id, data)
     .then(() => children.remove(id))
     .then(() => children.save(id, newChildren))
-    .then(() => res.json({}))
+    .then(() => res.status(200).send())
     .catch(next)
 })
 

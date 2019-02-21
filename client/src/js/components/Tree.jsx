@@ -1,37 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import NodeRoot from 'Components/NodeRoot'
 import Factories from 'Components/Factories'
-import ModalWrapper from 'Components/common/ModalWrapper'
-import FactoryMenu from 'Components/FactoryMenu'
+import socketContainer from 'Containers/socket'
 
 const Tree = (props) => {
-  const [
-    isVisible,
-    setIsVisible
-  ] = useState(false)
-
   const {
-    factories
+    factories,
+    socket
   } = props
 
   return (
     <div className='tree'>
       <NodeRoot
-        handleViewModal={setIsVisible}
+        socket={socket}
       />
       <Factories
         factories={factories}
+        socket={socket}
       />
-      <ModalWrapper
-        isVisible={isVisible}
-      >
-        <FactoryMenu
-          setIsVisible={setIsVisible}
-        />
-      </ModalWrapper>
     </div>
   )
 }
 
-export default Tree
+const withSocket = socketContainer(Tree)
+export default withSocket

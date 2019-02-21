@@ -3,7 +3,7 @@ const cors = require('cors')
 const logger = require('morgan')
 
 const app = express()
-const server = require('http').Server(app)
+const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 
 // const middleware = require('./middleware')
@@ -24,9 +24,7 @@ app.use(express.json({ limit: '50mb' }))
 app.use('/api/factories', routes.factories)
 
 io.on('connection', (socket) => {
-  console.log('hello!')
   socket.on('factory updated', () => {
-    console.log('your factory is updated!')
     socket.broadcast.emit('factory updated')
   })
 })

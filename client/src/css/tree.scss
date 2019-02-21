@@ -16,9 +16,10 @@
 }
 
 .node-root {
+  display: flex;
+  justify-content: center;
   width: 200px;
   height: 150px;
-  border-radius: 0px;
 }
 
 .branches {

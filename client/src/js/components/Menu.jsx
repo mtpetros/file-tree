@@ -5,14 +5,7 @@ import FactoriesContainer from 'Containers/factories'
 
 import Input from 'Components/common/Input'
 import Button from 'Components/common/Button'
-
-import io from 'socket.io-client'
-
-const socket = io()
-
-const handleOnCancel = (setIsVisible) => {
-  return () => setIsVisible(false)
-}
+import ConditionalRender from 'Components/common/ConditionalRender'
 
 class FactoryMenu extends Component {
   constructor (props) {
@@ -20,7 +13,8 @@ class FactoryMenu extends Component {
 
     this.renderNumberOfChildren = this.renderNumberOfChildren.bind(this)
     this.createOrUpdateFactory = this.createOrUpdateFactory.bind(this)
-    this.handleOnConfirm = this.handleOnConfirm.bind(this)
+    this.handleConfirm = this.handleConfirm.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
   }
 
   componentDidMount () {
@@ -82,10 +76,11 @@ class FactoryMenu extends Component {
     return updateFactory(activeFactory.id, activeFactory)
   }
 
-  handleOnConfirm (e) {
+  handleConfirm (e) {
     const {
       getAllFactories,
-      setIsVisible
+      setIsVisible,
+      socket
     } = this.props
 
     setIsVisible(false)
@@ -94,24 +89,38 @@ class FactoryMenu extends Component {
       .then(getAllFactories)
   }
 
+  handleCancel (e) {
+    const {
+      setIsVisible
+    } = this.props
+
+    setIsVisible(false)
+    e.preventDefault()
+  }
+
   render () {
     const {
       type,
       activeFactory = {},
-      setIsVisible,
       setKey
     } = this.props
 
     const {
       name,
       bottom,
-      top
+      top,
+      amount
     } = activeFactory
 
-    const menuClass = type === 'factory' ? 'factory-menu' : 'node-menu'
+    const isFactory = type === 'factory'
+    const menuClass = isFactory ? 'factory-menu' : 'node-menu'
+    const stopPropagation = (e) => e.stopPropagation()
 
     return (
-      <div className={menuClass}>
+      <div
+        className={menuClass}
+        onClick={stopPropagation}
+      >
         <Input
           label='factory name'
           type='text'
@@ -133,15 +142,25 @@ class FactoryMenu extends Component {
           value={top}
           setKey={setKey}
         />
-        {this.renderNumberOfChildren()}
+        <ConditionalRender
+          condition={isFactory}
+        >
+          <Input
+            label='number of children'
+            type='text'
+            name='amount'
+            value={amount}
+            setKey={setKey}
+          />
+        </ConditionalRender>
         <div className='button-group'>
           <Button
             label='confirm'
-            onClick={this.handleOnConfirm}
+            onClick={this.handleConfirm}
           />
           <Button
             label='cancel'
-            onClick={handleOnCancel(setIsVisible)}
+            onClick={this.handleCancel}
           />
         </div>
       </div>

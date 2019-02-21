@@ -1,11 +1,25 @@
+import React from 'react'
+
 const ModalWrapper = (props) => {
   const {
     children,
-    isVisible = false
+    isVisible = false,
+    setIsVisible
   } = props
 
+  const handleSetHidden = (e) => {
+    setIsVisible(false)
+  }
+
   if (isVisible) {
-    return children
+    return (
+      <div
+        className='modal-wrapper'
+        onClick={handleSetHidden}
+      >
+        {children}
+      </div>
+    )
   }
 
   return null
