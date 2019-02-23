@@ -1,3 +1,5 @@
+/* globals fetch */
+
 const mode = 'cors'
 const redirect = 'error'
 const credentials = 'include'

@@ -1,5 +1,4 @@
 import { factories } from 'Lib/api'
-import generateChildren from 'Lib/generateChildren'
 
 const initialState = {
   id: null,
