@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
 import store from 'Reducers/store'
 
@@ -10,11 +10,12 @@ import Tree from 'Components/Tree'
 const App = () => {
   return (
     <Provider store={store}>
-      <div className='main'>
-        <Router>
+      <Router>
+        <div className='main'>
           <Route exact path='/tree' component={Tree} />
-        </Router>
-      </div>
+          <Redirect to='/tree' />
+        </div>
+      </Router>
     </Provider>
   )
 }
