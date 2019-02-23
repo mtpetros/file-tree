@@ -9,17 +9,31 @@ const NodeRoot = (props) => {
     setIsVisible
   ] = useState(false)
 
+  const [
+    position,
+    setPosition
+  ] = useState([])
+
   const {
     socket
   } = props
 
-  const handleClick = () => setIsVisible(true)
+  const handleViewModal = (e) => {
+    const x = e.clientX
+    const y = e.clientY
+
+    setIsVisible(true)
+    setPosition([x, y])
+  }
+
+  const nodeClass = 'node node-root'
+  const nodeActiveClass = isVisible ? `${nodeClass} active` : nodeClass
 
   return (
-    <div className='node-root'>
+    <>
       <div
-        className='node node-root'
-        onClick={handleClick}
+        className={nodeActiveClass}
+        onClick={handleViewModal}
       >
         <span>Node Root</span>
       </div>
@@ -30,9 +44,10 @@ const NodeRoot = (props) => {
         <FactoryMenu
           setIsVisible={setIsVisible}
           socket={socket}
+          position={position}
         />
       </ModalWrapper>
-    </div>
+    </>
   )
 }
 

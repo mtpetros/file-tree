@@ -38,14 +38,6 @@ class Factories extends Component {
     }
   }
 
-  componentWillUnmount () {
-    const {
-      socket
-    } = this.props
-
-    socket.close()
-  }
-
   render () {
     const {
       factories = [],

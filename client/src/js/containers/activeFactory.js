@@ -5,7 +5,8 @@ import {
   resetFactory,
   setKey,
   createFactory,
-  updateFactory
+  updateFactory,
+  removeFactory
 } from 'Reducers/activeFactory'
 
 const mapStateToProps = state => {
@@ -23,7 +24,8 @@ const mapDispatchToProps = {
   resetFactory,
   setKey,
   createFactory,
-  updateFactory
+  updateFactory,
+  removeFactory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)

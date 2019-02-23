@@ -50,12 +50,8 @@ export const updateFactory = (id, data) => {
   return () => factories.update(id, { data })
 }
 
-// export const createChildren = (opts) => {
-//   return (dispatch) => {
-//     const children = generateChildren(opts)
-//
-//     dispatch(setKey('children', children))
-//   }
-// }
+export const removeFactory = (id) => {
+  return () => factories.remove(id)
+}
 
 export default reducer

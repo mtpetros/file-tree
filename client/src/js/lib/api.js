@@ -19,5 +19,8 @@ export const factories = {
   },
   getAll: () => {
     return get(`${urlBase}/factories`)
+  },
+  remove: (id) => {
+    return methods.delete(`${urlBase}/factories/${id}`)
   }
 }

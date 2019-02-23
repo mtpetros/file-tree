@@ -77,8 +77,17 @@ const getAll = () => {
   return pool.query({ text }).then(camelize)
 }
 
+const remove = (id) => {
+  const text = `DELETE FROM factories
+    WHERE id = $1`
+
+  const values = [ id ]
+  return pool.query({ text, values }).then(camelize)
+}
+
 module.exports = {
   save,
   update,
-  getAll
+  getAll,
+  remove
 }

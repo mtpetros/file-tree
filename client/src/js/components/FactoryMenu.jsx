@@ -5,7 +5,8 @@ import Menu from './Menu'
 const FactoryMenu = (props) => {
   const {
     setIsVisible,
-    socket
+    socket,
+    position
   } = props
 
   return (
@@ -13,6 +14,7 @@ const FactoryMenu = (props) => {
       type='factory'
       setIsVisible={setIsVisible}
       socket={socket}
+      position={position}
     />
   )
 }

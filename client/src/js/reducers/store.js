@@ -9,9 +9,12 @@ import {
 
 import reducers from 'Reducers/index'
 
+const isDevelopment = process.env.NODE_ENV === 'development'
+const middleware = isDevelopment ? [thunk, logger] : [thunk]
+
 const store = createStore(
   combineReducers(reducers),
-  applyMiddleware(thunk, logger)
+  applyMiddleware(...middleware)
 )
 
 export default store

@@ -6,7 +6,8 @@ const NodeMenu = (props) => {
   const {
     factory,
     setIsVisible,
-    socket
+    socket,
+    position
   } = props
 
   return (
@@ -15,6 +16,7 @@ const NodeMenu = (props) => {
       factory={factory}
       setIsVisible={setIsVisible}
       socket={socket}
+      position={position}
     />
   )
 }

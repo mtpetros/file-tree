@@ -19,6 +19,11 @@ const Factory = (props) => {
     setIsVisible
   ] = useState(false)
 
+  const [
+    position,
+    setPosition
+  ] = useState([])
+
   const {
     factory,
     socket
@@ -33,7 +38,16 @@ const Factory = (props) => {
 
   const range = `${bottom} : ${top}`
 
-  const handleViewModal = () => setIsVisible(true)
+  const handleViewModal = (e) => {
+    const x = e.clientX
+    const y = e.clientY
+
+    setIsVisible(true)
+    setPosition([x, y])
+  }
+
+  const factoryClass = 'node parent'
+  const factoryActiveClass = isVisible ? `${factoryClass} active` : factoryClass
 
   return (
     <div className='item'>
@@ -45,13 +59,14 @@ const Factory = (props) => {
           setIsVisible={setIsVisible}
           factory={factory}
           socket={socket}
+          position={position}
         />
       </ModalWrapper>
       <div
         className='factory'
         onClick={handleViewModal}
       >
-        <div className='node'>
+        <div className={factoryActiveClass}>
           {name}
         </div>
         <div className='range'>

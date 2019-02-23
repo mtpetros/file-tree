@@ -11,10 +11,11 @@ class FactoryMenu extends Component {
   constructor (props) {
     super(props)
 
-    this.renderNumberOfChildren = this.renderNumberOfChildren.bind(this)
+    this.getMenuPosition = this.getMenuPosition.bind(this)
     this.createOrUpdateFactory = this.createOrUpdateFactory.bind(this)
     this.handleConfirm = this.handleConfirm.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   componentDidMount () {
@@ -37,28 +38,20 @@ class FactoryMenu extends Component {
     resetFactory()
   }
 
-  renderNumberOfChildren () {
+  getMenuPosition () {
     const {
-      type,
-      activeFactory = {},
-      setKey
+      position = []
     } = this.props
 
-    const { amount } = activeFactory
+    const [
+      x,
+      y
+    ] = position
 
-    if (type === 'factory') {
-      return (
-        <Input
-          label='number of children'
-          type='text'
-          name='amount'
-          value={amount}
-          setKey={setKey}
-        />
-      )
+    return {
+      left: `${x - 250}px`,
+      top: `${y + 25}px`
     }
-
-    return null
   }
 
   createOrUpdateFactory () {
@@ -76,6 +69,23 @@ class FactoryMenu extends Component {
     return updateFactory(activeFactory.id, activeFactory)
   }
 
+  handleDelete (e) {
+    const {
+      setIsVisible,
+      removeFactory,
+      activeFactory: {
+        id
+      },
+      socket,
+      getAllFactories
+    } = this.props
+
+    removeFactory(id)
+      .then(() => setIsVisible(false))
+      .then(() => socket.emit('factory updated'))
+      .then(getAllFactories)
+  }
+
   handleConfirm (e) {
     const {
       getAllFactories,
@@ -83,8 +93,8 @@ class FactoryMenu extends Component {
       socket
     } = this.props
 
-    setIsVisible(false)
     this.createOrUpdateFactory()
+      .then(() => setIsVisible(false))
       .then(() => socket.emit('factory updated'))
       .then(getAllFactories)
   }
@@ -113,12 +123,14 @@ class FactoryMenu extends Component {
     } = activeFactory
 
     const isFactory = type === 'factory'
-    const menuClass = isFactory ? 'factory-menu' : 'node-menu'
+    const isNode = type === 'node'
     const stopPropagation = (e) => e.stopPropagation()
+    const positionStyle = this.getMenuPosition()
 
     return (
       <div
-        className={menuClass}
+        className='menu'
+        style={positionStyle}
         onClick={stopPropagation}
       >
         <Input
@@ -158,6 +170,14 @@ class FactoryMenu extends Component {
             label='confirm'
             onClick={this.handleConfirm}
           />
+          <ConditionalRender
+            condition={isNode}
+          >
+            <Button
+              label='delete factory'
+              onClick={this.handleDelete}
+            />
+          </ConditionalRender>
           <Button
             label='cancel'
             onClick={this.handleCancel}

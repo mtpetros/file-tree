@@ -3,6 +3,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
+  z-index: 1;
 }
 
 .node {
@@ -13,13 +14,25 @@
   border: 1px solid #000;
   border-radius: 3px;
   padding: 2.5px 5px;
-}
+  font-size: 18px;
+  
+  &.node-root {
+    width: 200px;
+    height: 150px;
+    font-size: 22px;
 
-.node-root {
-  display: flex;
-  justify-content: center;
-  width: 200px;
-  height: 150px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &.parent:hover {
+    cursor: pointer;
+  }
+
+  &.active {
+    font-weight: bold;
+  }
 }
 
 .branches {
